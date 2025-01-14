@@ -64,9 +64,59 @@
             document.querySelectorAll('.content').forEach(content => content.style.display = 'none');
             document.getElementById(id).style.display = 'block';
         }
+  function toggleFeedbackForm() {
+    const form = document.getElementById('feedbackForm');
+    if (form.style.display === 'block') {
+      form.style.display = 'none';
+    } else {
+      form.style.display = 'block';
+    }
+  }
+
     </script>
 </head>
 <body>
+    <!-- دکمه برای باز کردن فرم -->
+<button onclick="toggleFeedbackForm()" class="feedback-button">پیشنهاد و انتقاد</button>
+
+<!-- فرم مخفی -->
+<div id="feedbackForm" class="feedback-form">
+  <h2>پیشنهاد و انتقاد</h2>
+  <form id="feedback-form" action="https://formspree.io/f/mwppydjg" method="POST">
+    <textarea name="feedback" placeholder="نظر خود را اینجا بنویسید..." required></textarea>
+    <button type="submit">ارسال</button>
+  </form>
+  <p id="response-message" style="color: green; display: none;">ارسال شد! از نظر شما متشکریم.</p>
+  
+  </form>
+  <button onclick="toggleFeedbackForm()" class="close-button">بستن</button>
+</div>
+
+    <div class="navbar">
+        <div class="menu-toggle" id="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="menu" id="menu">
+            <ul>
+                <li><a href="http://t.me/PersiaanGulff">پشتیبانی (تلگرام)</a></li>
+                <li><a href="#">پیشنهاد</a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+    
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        })
+    </script>
+    
     <header>
         <h1>آموزش کالاف دیوتی</h1>
     </header>
@@ -77,7 +127,7 @@
         <button class="button" onclick="showContent('content3')">بهترین اتچمنت‌های سیزن جدید</button>
         <button class="button" onclick="showContent('content4')">پرک مولتی پلیر چیست؟</button>
         <button class="button" onclick="showContent('content5')">پرک بتل رویال چیست؟</button>
-        <button class="button" onclick="showContent('content6')">بهترین تفنگ ها <h6>به زودی</h6></button>
+        <button class="button" onclick="showContent('content6')">بهترین تفنگ ها <h6>به زودی</h6> </button>
     </div>
     <div id="content1" class="content">
         <h2>کالاف چیست؟</h2>
@@ -283,7 +333,36 @@
                 <H2>بخش مولتی</H2>
                 Peacekeeper MK2... AS ....CBR4... HVK... QQ9 ...  SKS (برای نبردهای دور)...Locus (برای اسنایپ)... RUS-79U
             
-            بهترین تفنگ ها بدون ترتیب قوی بودن</b>
-
+            بهترین تفنگ ها بدون ترتیب قوی  </b>
+            <script>
+                const form = document.getElementById('feedback-form');
+                const responseMessage = document.getElementById('response-message');
+              
+                form.addEventListener('submit', async (event) => {
+                  event.preventDefault(); // جلوگیری از رفرش شدن صفحه
+              
+                  const formData = new FormData(form);
+              
+                  try {
+                    const response = await fetch(form.action, {
+                      method: form.method,
+                      body: formData,
+                      headers: {
+                        Accept: 'application/json',
+                      },
+                    });
+              
+                    if (response.ok) {
+                      responseMessage.style.display = 'block'; // نمایش پیام ارسال
+                      form.reset(); // پاک کردن فرم
+                    } else {
+                      alert('مشکلی پیش آمده است. لطفاً دوباره تلاش کنید.');
+                    }
+                  } catch (error) {
+                    alert('مشکلی پیش آمده است. لطفاً اینترنت خود را بررسی کنید.');
+                  }
+                });
+              </script>
     </body>
 </html>
+
